@@ -1,6 +1,9 @@
 # Mac OS X files
 .DS_Store
 
+# Application files
+/config.yaml
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
