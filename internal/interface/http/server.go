@@ -63,8 +63,3 @@ func (s *Server) RegisterShutdownHook(hook func(context.Context) error) {
 	defer s.mu.Unlock()
 	s.shutdownHooks = append(s.shutdownHooks, hook)
 }
-
-// AddRoutes allows other modules to register their own routes on the Gin engine.
-func (s *Server) AddRoutes(register func(r *gin.Engine)) {
-	register(s.engine)
-}

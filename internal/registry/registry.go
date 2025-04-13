@@ -16,6 +16,7 @@ import (
 	"github.com/yangszwei/go-micala/config"
 	"github.com/yangszwei/go-micala/internal/infrastructure/elasticsearch"
 	httpserver "github.com/yangszwei/go-micala/internal/interface/http"
+	"github.com/yangszwei/go-micala/internal/usecase/completion"
 )
 
 // App defines the application lifecycle interface, exposing methods to start and shut down the
@@ -61,6 +62,11 @@ func (a *app) Init() (err error) {
 	if err := a.es.EnsureIndices(); err != nil {
 		panic(fmt.Sprintf("failed to initialize elasticsearch indices: %v", err))
 	}
+
+	// Register the HTTP server routes
+	a.server.RegisterRoutes(httpserver.RoutesDeps{
+		CompletionService: completion.NewService(a.es.Client),
+	})
 
 	return
 }
