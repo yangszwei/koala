@@ -6,6 +6,7 @@ package registry
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
@@ -13,12 +14,15 @@ import (
 	"time"
 
 	"github.com/yangszwei/go-micala/config"
+	"github.com/yangszwei/go-micala/internal/infrastructure/elasticsearch"
 	httpserver "github.com/yangszwei/go-micala/internal/interface/http"
 )
 
 // App defines the application lifecycle interface, exposing methods to start and shut down the
 // application server.
 type App interface {
+	// Init initializes the application components.
+	Init() error
 	// Run starts the application server.
 	Run() error
 	// Shutdown gracefully shuts down the application.
@@ -29,21 +33,36 @@ type App interface {
 type app struct {
 	server *httpserver.Server
 	cfg    *config.Config
+	es     *elasticsearch.Client
 }
 
-// NewApp creates a new App instance with the given address.
+// NewApp creates a new App instance.
 func NewApp() App {
-	cfg, err := config.Load()
+	return &app{
+		server: httpserver.NewServer(),
+	}
+}
+
+// Init initializes the application components.
+func (a *app) Init() (err error) {
+	// Load the configuration
+	a.cfg, err = config.Load()
 	if err != nil {
 		panic(err)
 	}
 
-	server := httpserver.NewServer()
-
-	return &app{
-		server: server,
-		cfg:    cfg,
+	// Initialize the Elasticsearch client
+	a.es, err = elasticsearch.NewClient(a.cfg.Elastic.Address)
+	if err != nil {
+		return fmt.Errorf("failed to create elasticsearch client: %w", err)
 	}
+
+	// Create the Elasticsearch indices
+	if err := a.es.EnsureIndices(); err != nil {
+		panic(fmt.Sprintf("failed to initialize elasticsearch indices: %v", err))
+	}
+
+	return
 }
 
 // Run starts the HTTP server on the specified address.

@@ -13,12 +13,18 @@ var defaultConfig []byte
 
 // Config is the top-level application configuration structure.
 type Config struct {
-	Http HttpConfig `mapstructure:"http"`
+	Http    HttpConfig    `mapstructure:"http"`
+	Elastic ElasticConfig `mapstructure:"elasticsearch"`
 }
 
 // HttpConfig holds HTTP server configuration parameters such as address binding.
 type HttpConfig struct {
 	Addr string `mapstructure:"address"`
+}
+
+// ElasticConfig holds Elasticsearch client configuration parameters.
+type ElasticConfig struct {
+	Address string `mapstructure:"address"`
 }
 
 // Load loads configuration from a YAML file.
