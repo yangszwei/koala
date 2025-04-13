@@ -17,6 +17,7 @@ import (
 	"github.com/yangszwei/go-micala/internal/infrastructure/elasticsearch"
 	httpserver "github.com/yangszwei/go-micala/internal/interface/http"
 	"github.com/yangszwei/go-micala/internal/usecase/completion"
+	"github.com/yangszwei/go-micala/internal/usecase/search"
 )
 
 // App defines the application lifecycle interface, exposing methods to start and shut down the
@@ -66,6 +67,7 @@ func (a *app) Init() (err error) {
 	// Register the HTTP server routes
 	a.server.RegisterRoutes(httpserver.RoutesDeps{
 		CompletionService: completion.NewService(a.es.Client),
+		SearchService:     search.NewService(a.es.Client),
 	})
 
 	return
