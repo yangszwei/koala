@@ -3,3 +3,11 @@ http:
 
 elasticsearch:
   address: "http://localhost:9200"
+
+datasources:
+  - name: "Orthanc"
+    type: "dicomweb"
+    url: "http://localhost:8042/dicom-web"
+  - name: "HAPI FHIR"
+    type: "fhir"
+    url: "http://localhost:8080/fhir"

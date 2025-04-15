@@ -18,6 +18,8 @@ type Service interface {
 	Search(ctx context.Context, query Query) ([]Result, error)
 	// ListCategories returns categories that optionally match a given prefix.
 	ListCategories(ctx context.Context, prefix string) ([]CategoryBucket, error)
+	// Exists checks if a document with the given ID already exists in the index.
+	Exists(ctx context.Context, id string) (bool, error)
 }
 
 var indexName = "search_documents"
@@ -57,6 +59,16 @@ func (s *service) Index(ctx context.Context, doc Document) error {
 	}
 
 	return nil
+}
+
+// Exists checks if a document with the given ID already exists in the index.
+func (s *service) Exists(ctx context.Context, id string) (bool, error) {
+	res, err := s.es.Exists(indexName, id, s.es.Exists.WithContext(ctx))
+	if err != nil {
+		return false, fmt.Errorf("exists request: %w", err)
+	}
+	defer res.Body.Close()
+	return res.StatusCode == 200, nil
 }
 
 // Search performs a query on the Elasticsearch index with support for progressive fuzziness.

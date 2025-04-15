@@ -26,5 +26,20 @@ services:
     depends_on:
       - elasticsearch
 
+  orthanc:
+    image: orthancteam/orthanc:22.6.1
+    container_name: orthanc
+    environment:
+      ORTHANC__AUTHENTICATION_ENABLED: "false"
+      ORTHANC__DICOM_WEB__ENABLED: "true"
+    ports:
+      - "8042:8042"
+
+  hapi:
+    image: hapiproject/hapi:latest
+    container_name: hapi
+    ports:
+      - "8080:8080"
+
 volumes:
   esdata:

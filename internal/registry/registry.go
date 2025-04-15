@@ -7,6 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -14,9 +15,11 @@ import (
 	"time"
 
 	"github.com/yangszwei/go-micala/config"
+	"github.com/yangszwei/go-micala/internal/infrastructure/datasource"
 	"github.com/yangszwei/go-micala/internal/infrastructure/elasticsearch"
 	httpserver "github.com/yangszwei/go-micala/internal/interface/http"
 	"github.com/yangszwei/go-micala/internal/usecase/completion"
+	"github.com/yangszwei/go-micala/internal/usecase/indexer"
 	"github.com/yangszwei/go-micala/internal/usecase/search"
 )
 
@@ -64,11 +67,34 @@ func (a *app) Init() (err error) {
 		panic(fmt.Sprintf("failed to initialize elasticsearch indices: %v", err))
 	}
 
+	// Initialize the services
+	completionSvc := completion.NewService(a.es.Client)
+	searchSvc := search.NewService(a.es.Client)
+
 	// Register the HTTP server routes
 	a.server.RegisterRoutes(httpserver.RoutesDeps{
-		CompletionService: completion.NewService(a.es.Client),
-		SearchService:     search.NewService(a.es.Client),
+		CompletionService: completionSvc,
+		SearchService:     searchSvc,
 	})
+
+	indexerSvc := indexer.New(searchSvc)
+
+	scanPolicy := indexer.ScanPolicy{
+		FullScanInterval: 15 * time.Minute,
+		PageSize:         50,
+		MaxPagesPerCycle: 0, // 0 = unlimited
+	}
+
+	for _, ds := range a.cfg.DataSources {
+		client, err := datasource.New(ds.Type, ds.Name, ds.URL)
+		if err != nil {
+			log.Printf("[WARN] skipping datasource %s: %v\n", ds.Name, err)
+			continue
+		}
+		indexerSvc.Register(client, scanPolicy)
+	}
+
+	indexerSvc.Start(context.Background())
 
 	return
 }

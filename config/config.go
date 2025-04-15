@@ -13,8 +13,9 @@ var defaultConfig []byte
 
 // Config is the top-level application configuration structure.
 type Config struct {
-	Http    HttpConfig    `mapstructure:"http"`
-	Elastic ElasticConfig `mapstructure:"elasticsearch"`
+	Http        HttpConfig         `mapstructure:"http"`
+	Elastic     ElasticConfig      `mapstructure:"elasticsearch"`
+	DataSources []DataSourceConfig `mapstructure:"datasources"`
 }
 
 // HttpConfig holds HTTP server configuration parameters such as address binding.
@@ -25,6 +26,13 @@ type HttpConfig struct {
 // ElasticConfig holds Elasticsearch client configuration parameters.
 type ElasticConfig struct {
 	Address string `mapstructure:"address"`
+}
+
+// DataSourceConfig represents a single external data source (e.g., DICOMweb or FHIR server).
+type DataSourceConfig struct {
+	Name string `mapstructure:"name"`
+	Type string `mapstructure:"type"` // e.g., "dicomweb", "fhir"
+	URL  string `mapstructure:"url"`
 }
 
 // Load loads configuration from a YAML file.
