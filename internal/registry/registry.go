@@ -43,9 +43,7 @@ type app struct {
 
 // NewApp creates a new App instance.
 func NewApp() App {
-	return &app{
-		server: httpserver.NewServer(),
-	}
+	return &app{}
 }
 
 // Init initializes the application components.
@@ -54,6 +52,12 @@ func (a *app) Init() (err error) {
 	a.cfg, err = config.Load()
 	if err != nil {
 		panic(err)
+	}
+
+	// Initialize the HTTP server
+	a.server, err = httpserver.NewServer(a.cfg.Http)
+	if err != nil {
+		return fmt.Errorf("failed to create HTTP server: %w", err)
 	}
 
 	// Initialize the Elasticsearch client
@@ -102,7 +106,7 @@ func (a *app) Init() (err error) {
 // Run starts the HTTP server on the specified address.
 func (a *app) Run() error {
 	go func() {
-		err := a.server.Run(a.cfg.Http.Addr)
+		err := a.server.Run()
 		if err != nil && !errors.Is(err, http.ErrServerClosed) {
 			panic(err)
 		}

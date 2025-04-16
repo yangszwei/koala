@@ -10,36 +10,35 @@ import (
 	"sync"
 
 	"github.com/gin-gonic/gin"
+	"github.com/yangszwei/go-micala/config"
 )
 
 // Server wraps a Gin engine and provides methods for running an HTTP server,
 // registering routes, and handling graceful shutdown.
 type Server struct {
+	cfg           config.HttpConfig
 	engine        *gin.Engine
-	addr          string
 	httpServer    *http.Server
 	shutdownHooks []func(context.Context) error
 	mu            sync.Mutex
 }
 
 // NewServer initializes a new Server instance with default middleware and routes.
-func NewServer() *Server {
+func NewServer(cfg config.HttpConfig) (*Server, error) {
 	engine := gin.Default()
 
-	return &Server{
-		engine: engine,
+	server := Server{
+		cfg:        cfg,
+		engine:     engine,
+		httpServer: &http.Server{Addr: cfg.Addr, Handler: engine},
 	}
+
+	return &server, nil
 }
 
 // Run starts the HTTP server on the specified address.
-func (s *Server) Run(addr string) error {
-	s.addr = addr
-	s.httpServer = &http.Server{
-		Addr:    addr,
-		Handler: s.engine,
-	}
-
-	fmt.Printf("Starting server on %s\n", addr)
+func (s *Server) Run() error {
+	fmt.Printf("Starting server on %s\n", s.cfg.Addr)
 	return s.httpServer.ListenAndServe()
 }
 

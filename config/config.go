@@ -20,7 +20,8 @@ type Config struct {
 
 // HttpConfig holds HTTP server configuration parameters such as address binding.
 type HttpConfig struct {
-	Addr string `mapstructure:"address"`
+	Addr     string `mapstructure:"address"`
+	BasePath string `mapstructure:"basePath"`
 }
 
 // ElasticConfig holds Elasticsearch client configuration parameters.

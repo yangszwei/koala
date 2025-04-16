@@ -13,6 +13,10 @@ type RoutesDeps struct {
 
 // RegisterRoutes configures all HTTP routes for the app.
 func (s *Server) RegisterRoutes(deps RoutesDeps) {
-	NewCompletionHandler(s.engine, deps.CompletionService)
-	NewSearchHandler(s.engine, deps.SearchService)
+	group := s.engine.Group(s.cfg.BasePath)
+
+	// API routes
+	api := group.Group("/api")
+	RegisterCompletionHandler(api, deps.CompletionService)
+	RegisterSearchHandler(api, deps.SearchService)
 }

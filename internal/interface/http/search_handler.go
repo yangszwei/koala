@@ -12,8 +12,8 @@ type SearchHandler struct {
 	svc search.Service
 }
 
-// NewSearchHandler creates a new handler and registers routes.
-func NewSearchHandler(r *gin.Engine, svc search.Service) {
+// RegisterSearchHandler creates a new handler and registers routes.
+func RegisterSearchHandler(r gin.IRouter, svc search.Service) {
 	h := &SearchHandler{svc: svc}
 
 	r.POST("/search/index", h.Index)

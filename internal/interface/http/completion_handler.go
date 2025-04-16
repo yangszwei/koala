@@ -12,8 +12,8 @@ type CompletionHandler struct {
 	svc completion.Service
 }
 
-// NewCompletionHandler creates a new handler and registers routes.
-func NewCompletionHandler(r *gin.Engine, svc completion.Service) {
+// RegisterCompletionHandler creates a new handler and registers routes.
+func RegisterCompletionHandler(r gin.IRouter, svc completion.Service) {
 	h := &CompletionHandler{svc: svc}
 
 	// Public suggestion route
