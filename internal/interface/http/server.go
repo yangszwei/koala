@@ -10,7 +10,7 @@ import (
 	"sync"
 
 	"github.com/gin-gonic/gin"
-	"github.com/yangszwei/go-micala/config"
+	"github.com/yangszwei/koala/config"
 )
 
 // Server wraps a Gin engine and provides methods for running an HTTP server,

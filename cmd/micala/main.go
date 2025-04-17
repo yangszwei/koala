@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/yangszwei/go-micala/internal/registry"
+	"github.com/yangszwei/koala/internal/registry"
 )
 
 func main() {

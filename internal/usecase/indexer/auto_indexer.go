@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/yangszwei/go-micala/internal/infrastructure/datasource"
-	"github.com/yangszwei/go-micala/internal/usecase/search"
+	"github.com/yangszwei/koala/internal/infrastructure/datasource"
+	"github.com/yangszwei/koala/internal/usecase/search"
 )
 
 // ScanPolicy defines the configuration for how and when a data source should be scanned for indexing.

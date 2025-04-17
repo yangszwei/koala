@@ -14,13 +14,13 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/yangszwei/go-micala/config"
-	"github.com/yangszwei/go-micala/internal/infrastructure/datasource"
-	"github.com/yangszwei/go-micala/internal/infrastructure/elasticsearch"
-	httpserver "github.com/yangszwei/go-micala/internal/interface/http"
-	"github.com/yangszwei/go-micala/internal/usecase/completion"
-	"github.com/yangszwei/go-micala/internal/usecase/indexer"
-	"github.com/yangszwei/go-micala/internal/usecase/search"
+	"github.com/yangszwei/koala/config"
+	"github.com/yangszwei/koala/internal/infrastructure/datasource"
+	"github.com/yangszwei/koala/internal/infrastructure/elasticsearch"
+	httpserver "github.com/yangszwei/koala/internal/interface/http"
+	"github.com/yangszwei/koala/internal/usecase/completion"
+	"github.com/yangszwei/koala/internal/usecase/indexer"
+	"github.com/yangszwei/koala/internal/usecase/search"
 )
 
 // App defines the application lifecycle interface, exposing methods to start and shut down the

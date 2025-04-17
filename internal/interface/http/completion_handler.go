@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/yangszwei/go-micala/internal/usecase/completion"
+	"github.com/yangszwei/koala/internal/usecase/completion"
 )
 
 // CompletionHandler handles HTTP requests related to completion terms.

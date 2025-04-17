@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/yangszwei/go-micala/internal/usecase/search"
-	"github.com/yangszwei/go-micala/pkg/elasticutil"
+	"github.com/yangszwei/koala/internal/usecase/search"
+	"github.com/yangszwei/koala/pkg/elasticutil"
 )
 
 // dicomwebClient implements the Client interface for DICOMweb data sources.

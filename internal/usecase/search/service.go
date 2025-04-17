@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	"github.com/elastic/go-elasticsearch/v8"
-	"github.com/yangszwei/go-micala/pkg/elasticutil"
+	"github.com/yangszwei/koala/pkg/elasticutil"
 )
 
 // Service defines indexing and search operations for study documents.

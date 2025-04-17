@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/yangszwei/go-micala/internal/usecase/search"
+	"github.com/yangszwei/koala/internal/usecase/search"
 )
 
 // DataSummary represents a summary returned by a data source.

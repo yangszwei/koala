@@ -1,8 +1,8 @@
 package http
 
 import (
-	"github.com/yangszwei/go-micala/internal/usecase/completion"
-	"github.com/yangszwei/go-micala/internal/usecase/search"
+	"github.com/yangszwei/koala/internal/usecase/completion"
+	"github.com/yangszwei/koala/internal/usecase/search"
 )
 
 // RoutesDeps bundles all service dependencies for HTTP handlers.

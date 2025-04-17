@@ -1,4 +1,4 @@
-module github.com/yangszwei/go-micala
+module github.com/yangszwei/koala
 
 go 1.24.2
 

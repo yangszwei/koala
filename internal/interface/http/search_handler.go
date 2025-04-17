@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/yangszwei/go-micala/internal/usecase/search"
+	"github.com/yangszwei/koala/internal/usecase/search"
 )
 
 // SearchHandler handles HTTP requests related to search operations.

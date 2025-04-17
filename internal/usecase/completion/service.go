@@ -10,9 +10,9 @@ import (
 	"strings"
 
 	"github.com/elastic/go-elasticsearch/v8"
-	"github.com/yangszwei/go-micala/internal/domain"
-	"github.com/yangszwei/go-micala/pkg/elasticutil"
-	"github.com/yangszwei/go-micala/pkg/iox"
+	"github.com/yangszwei/koala/internal/domain"
+	"github.com/yangszwei/koala/pkg/elasticutil"
+	"github.com/yangszwei/koala/pkg/iox"
 )
 
 // Service defines autocomplete term operations.
