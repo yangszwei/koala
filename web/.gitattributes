@@ -1,0 +1,19 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Source code
+*.css             text diff=css
+*.htm             text diff=html
+*.html            text diff=html
+
+# Documentation
+*.md              text diff=md
+
+# Fixes syntax highlighting on GitHub to allow comments
+tsconfig.json     linguist-language=JSON-with-Comments
+
+# Graphics
+*.jpg             binary
+*.jpeg            binary
+*.png             binary
+*.svg             text
