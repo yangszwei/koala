@@ -44,7 +44,7 @@ func preloadStaticFiles(staticFS fs.FS, basePath string) map[string][]byte {
 			return err
 		}
 		// Replace placeholder with actual basePath
-		modified := strings.ReplaceAll(string(content), "/{{.BaseName}}", baseName)
+		modified := strings.ReplaceAll(string(content), "/__KOALA_BASE_PATH__", baseName)
 		files[path] = []byte(modified)
 		return nil
 	})
