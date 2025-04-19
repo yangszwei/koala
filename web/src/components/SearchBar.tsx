@@ -16,7 +16,7 @@ export default function SearchBar({ query, setQuery, onSubmit }: Props) {
 	const { suggestions } = useTermSuggestions(query);
 	const [selectedIndex, setSelectedIndex] = useState(-1);
 	const containerRef = useRef<HTMLDivElement>(null);
-	const [showSuggestions, setShowSuggestions] = useState(true);
+	const [showSuggestions, setShowSuggestions] = useState(false);
 
 	useEffect(() => {
 		setSelectedIndex(-1);
@@ -27,8 +27,6 @@ export default function SearchBar({ query, setQuery, onSubmit }: Props) {
 			if (containerRef.current) {
 				if (!containerRef.current.contains(event.target as Node)) {
 					setShowSuggestions(false);
-				} else if (query.trim() !== '') {
-					setShowSuggestions(true);
 				}
 			}
 		};
@@ -41,12 +39,19 @@ export default function SearchBar({ query, setQuery, onSubmit }: Props) {
 	return (
 		<div ref={containerRef} className="relative w-full max-w-2xl">
 			<div className="overflow-hidden rounded-full border border-gray-300 bg-white shadow-md">
-				<form onSubmit={onSubmit} className="flex h-12 items-stretch">
+				<form
+					onSubmit={(e) => {
+						onSubmit(e);
+						setShowSuggestions(false);
+					}}
+					className="flex h-12 items-stretch"
+				>
 					<input
 						type="text"
 						value={query}
 						onChange={(e) => setQuery(e.target.value)}
 						onFocus={() => setShowSuggestions(true)}
+						onClick={() => setShowSuggestions(true)}
 						onKeyDown={(e) => {
 							if (e.key === 'ArrowDown') {
 								e.preventDefault();
