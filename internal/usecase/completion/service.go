@@ -123,10 +123,18 @@ func (s *service) Suggest(ctx context.Context, prefix string, size int) ([]strin
 	body := map[string]interface{}{
 		"suggest": map[string]interface{}{
 			"term-suggest": map[string]interface{}{
-				"prefix": elasticutil.EscapeQueryString(prefix),
+				"prefix": prefix,
 				"completion": map[string]interface{}{
 					"field": "term",
-					"size":  size,
+					"size":  size / 2,
+				},
+			},
+			"term-suggest-fuzzy": map[string]interface{}{
+				"prefix": prefix,
+				"completion": map[string]interface{}{
+					"field": "term",
+					"fuzzy": true,
+					"size":  size / 2,
 				},
 			},
 		},
@@ -165,9 +173,15 @@ func (s *service) Suggest(ctx context.Context, prefix string, size int) ([]strin
 	}
 
 	var suggestions []string
-	for _, result := range parsed.Suggest["term-suggest"] {
-		for _, opt := range result.Options {
-			suggestions = append(suggestions, opt.Text)
+	seen := make(map[string]struct{})
+	for _, key := range []string{"term-suggest", "term-suggest-fuzzy"} {
+		for _, result := range parsed.Suggest[key] {
+			for _, opt := range result.Options {
+				if _, exists := seen[opt.Text]; !exists {
+					suggestions = append(suggestions, opt.Text)
+					seen[opt.Text] = struct{}{}
+				}
+			}
 		}
 	}
 
