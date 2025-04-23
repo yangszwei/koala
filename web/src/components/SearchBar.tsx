@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
 import mdiMagnify from '@iconify-icons/mdi/magnify';
-import { useTermSuggestions } from '@/hooks/terms';
+import useTermSuggestions from '@/hooks/useTermSuggestions';
 
 import type { FormEvent } from 'react';
 

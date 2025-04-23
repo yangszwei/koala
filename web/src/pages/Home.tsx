@@ -17,8 +17,8 @@ export default function Home() {
 	return (
 		<div className="flex h-full flex-col items-center justify-start px-4 pt-36">
 			{/* Logo or App Title */}
-			<h1 className="mb-12 flex items-center justify-center">
-				<img src={textLogo} className="h-24 select-none" draggable="false" alt="KOALA" />
+			<h1 className="mb-8 flex items-center justify-center md:mb-12">
+				<img src={textLogo} className="h-14 select-none md:h-20" draggable="false" alt="KOALA" />
 			</h1>
 
 			{/* Search Bar */}

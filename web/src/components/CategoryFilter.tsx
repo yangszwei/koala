@@ -53,7 +53,7 @@ export default function CategoryFilter({ selected, onChange }: CategoryFilterPro
 				{loading ? (
 					<div className="text-sm text-gray-500">Loading...</div>
 				) : (
-					<ul className="max-h-64 space-y-1 overflow-y-auto">
+					<ul className="space-y-1">
 						{allItems.map((cat) => (
 							<li key={cat.key} className="flex items-center gap-2 text-sm">
 								<input

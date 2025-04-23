@@ -8,7 +8,7 @@ import { apiBase } from '@/configs/path';
  * @returns {{ suggestions: string[]; loading: boolean }} An object containing the fetched suggestions and loading
  *   state.
  */
-export function useTermSuggestions(query: string): { suggestions: string[]; loading: boolean } {
+export default function useTermSuggestions(query: string): { suggestions: string[]; loading: boolean } {
 	const [suggestions, setSuggestions] = useState<string[]>([]);
 	const [loading, setLoading] = useState(false);
 
