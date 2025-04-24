@@ -18,8 +18,8 @@ import (
 	"github.com/yangszwei/koala/internal/infrastructure/datasource"
 	"github.com/yangszwei/koala/internal/infrastructure/elasticsearch"
 	httpserver "github.com/yangszwei/koala/internal/interface/http"
+	"github.com/yangszwei/koala/internal/interface/worker"
 	"github.com/yangszwei/koala/internal/usecase/completion"
-	"github.com/yangszwei/koala/internal/usecase/indexer"
 	"github.com/yangszwei/koala/internal/usecase/search"
 )
 
@@ -81,9 +81,9 @@ func (a *app) Init() (err error) {
 		SearchService:     searchSvc,
 	})
 
-	indexerSvc := indexer.New(searchSvc)
+	indexerSvc := worker.NewAutoIndexer(searchSvc)
 
-	scanPolicy := indexer.ScanPolicy{
+	scanPolicy := worker.ScanPolicy{
 		FullScanInterval: 15 * time.Minute,
 		PageSize:         50,
 		MaxPagesPerCycle: 0, // 0 = unlimited

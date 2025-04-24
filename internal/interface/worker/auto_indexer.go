@@ -1,4 +1,4 @@
-package indexer
+package worker
 
 import (
 	"context"
@@ -32,8 +32,8 @@ type indexerState struct {
 	lastFullScan time.Time
 }
 
-// New returns an initialized AutoIndexer with default state and client mappings.
-func New(svc search.Service) *AutoIndexer {
+// NewAutoIndexer returns an initialized AutoIndexer with default state and client mappings.
+func NewAutoIndexer(svc search.Service) *AutoIndexer {
 	return &AutoIndexer{
 		clients:  make(map[string]datasource.Client),
 		svc:      svc,
