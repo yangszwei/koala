@@ -1,6 +1,7 @@
 http:
   address: "0.0.0.0:8080"
   basePath: "/"
+  headless: false
 
 elasticsearch:
   address: "http://localhost:9200"

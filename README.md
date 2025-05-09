@@ -61,6 +61,17 @@ Create a config.yaml file in your project root for custom configurations. See th
 
 > **Note**: The `.env` file in `/web` is only used during frontend development to configure the Vite dev server. It does not affect backend configuration.
 
+### Headless Mode
+
+To run Koala without the frontend (API-only mode), enable headless mode by setting the following in your config.yaml:
+
+```yaml
+http:
+  headless: true
+```
+
+In this mode, APIs are served without the /api prefix.
+
 ## 🛠️ Development Setup
 
 ### Prerequisites

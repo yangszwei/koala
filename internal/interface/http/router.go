@@ -17,13 +17,17 @@ type RoutesDeps struct {
 
 // RegisterRoutes sets up all HTTP routes, including static file serving and API endpoints.
 func (s *Server) RegisterRoutes(deps RoutesDeps) {
+	apiBase := "/"
 	group := s.engine.Group(s.cfg.BasePath)
 
 	// Web handler
-	s.engine.NoRoute(NewWebHandler(s.cfg.BasePath))
+	if !s.cfg.Headless {
+		apiBase = "/api"
+		s.engine.NoRoute(NewWebHandler(s.cfg.BasePath))
+	}
 
 	// API routes
-	api := group.Group("/api")
+	api := group.Group(apiBase)
 	RegisterCompletionHandler(api, deps.CompletionService)
 	RegisterSearchHandler(api, deps.SearchService)
 }

@@ -22,6 +22,7 @@ type Config struct {
 type HttpConfig struct {
 	Addr     string `mapstructure:"address"`
 	BasePath string `mapstructure:"basePath"`
+	Headless bool   `mapstructure:"headless"`
 }
 
 // ElasticConfig holds Elasticsearch client configuration parameters.
